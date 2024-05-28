@@ -30,9 +30,9 @@ namespace EmbeddedDesignProjectGUI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.refresh_btn = new System.Windows.Forms.Button();
             this.serverName = new System.Windows.Forms.ComboBox();
             this.PC7 = new System.Windows.Forms.CheckBox();
@@ -80,6 +80,7 @@ namespace EmbeddedDesignProjectGUI
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lightsScrollBar = new System.Windows.Forms.VScrollBar();
             this.lightsTxt = new System.Windows.Forms.TextBox();
             this.lightGauge = new AquaControls.AquaGauge();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -95,6 +96,7 @@ namespace EmbeddedDesignProjectGUI
             this.piTuningKP = new System.Windows.Forms.NumericUpDown();
             this.setpointNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.dataLoggingLabel = new System.Windows.Forms.Label();
@@ -118,8 +120,6 @@ namespace EmbeddedDesignProjectGUI
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.lightsScrollBar = new System.Windows.Forms.VScrollBar();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -130,13 +130,13 @@ namespace EmbeddedDesignProjectGUI
             ((System.ComponentModel.ISupportInitialize)(this.piTuningKP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.setpointNumericUpDown)).BeginInit();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // refresh_btn
@@ -245,6 +245,7 @@ namespace EmbeddedDesignProjectGUI
             this.databaseDisconnectBtn.TabIndex = 9;
             this.databaseDisconnectBtn.Text = "Database Disconnect";
             this.databaseDisconnectBtn.UseVisualStyleBackColor = false;
+            this.databaseDisconnectBtn.Click += new System.EventHandler(this.databaseDisconnectBtn_Click);
             // 
             // databaseConnectBtn
             // 
@@ -257,6 +258,7 @@ namespace EmbeddedDesignProjectGUI
             this.databaseConnectBtn.TabIndex = 8;
             this.databaseConnectBtn.Text = "Database Connect";
             this.databaseConnectBtn.UseVisualStyleBackColor = false;
+            this.databaseConnectBtn.Click += new System.EventHandler(this.databaseConnectBtn_Click);
             // 
             // PC1
             // 
@@ -630,6 +632,7 @@ namespace EmbeddedDesignProjectGUI
             this.disconnectBtn.TabIndex = 4;
             this.disconnectBtn.Text = "Disconnect";
             this.disconnectBtn.UseVisualStyleBackColor = false;
+            this.disconnectBtn.Click += new System.EventHandler(this.disconnectBtn_Click);
             // 
             // connectBtn
             // 
@@ -642,6 +645,7 @@ namespace EmbeddedDesignProjectGUI
             this.connectBtn.TabIndex = 3;
             this.connectBtn.Text = "Connect";
             this.connectBtn.UseVisualStyleBackColor = false;
+            this.connectBtn.Click += new System.EventHandler(this.connectBtn_Click);
             // 
             // label3
             // 
@@ -711,6 +715,13 @@ namespace EmbeddedDesignProjectGUI
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Lights";
+            // 
+            // lightsScrollBar
+            // 
+            this.lightsScrollBar.Location = new System.Drawing.Point(75, 30);
+            this.lightsScrollBar.Name = "lightsScrollBar";
+            this.lightsScrollBar.Size = new System.Drawing.Size(44, 307);
+            this.lightsScrollBar.TabIndex = 10;
             // 
             // lightsTxt
             // 
@@ -823,6 +834,7 @@ namespace EmbeddedDesignProjectGUI
             this.passwordHiddenBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.passwordHiddenBtn.TabIndex = 15;
             this.passwordHiddenBtn.TabStop = false;
+            this.passwordHiddenBtn.Click += new System.EventHandler(this.passwordHiddenBtn_Click);
             // 
             // databaseTxt
             // 
@@ -901,6 +913,24 @@ namespace EmbeddedDesignProjectGUI
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Temp Control";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(170, 31);
+            this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "tempSeries";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(358, 394);
+            this.chart1.TabIndex = 15;
+            this.chart1.Text = "tempChart";
             // 
             // groupBox5
             // 
@@ -1169,31 +1199,6 @@ namespace EmbeddedDesignProjectGUI
             this.label4.TabIndex = 4;
             this.label4.Text = "Server Name";
             // 
-            // chart1
-            // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
-            this.chart1.Location = new System.Drawing.Point(170, 31);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "tempSeries";
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(358, 394);
-            this.chart1.TabIndex = 15;
-            this.chart1.Text = "tempChart";
-            // 
-            // lightsScrollBar
-            // 
-            this.lightsScrollBar.Location = new System.Drawing.Point(75, 30);
-            this.lightsScrollBar.Name = "lightsScrollBar";
-            this.lightsScrollBar.Size = new System.Drawing.Size(44, 307);
-            this.lightsScrollBar.TabIndex = 10;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1217,6 +1222,7 @@ namespace EmbeddedDesignProjectGUI
             ((System.ComponentModel.ISupportInitialize)(this.setpointNumericUpDown)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
@@ -1226,7 +1232,6 @@ namespace EmbeddedDesignProjectGUI
             this.tabPage1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }

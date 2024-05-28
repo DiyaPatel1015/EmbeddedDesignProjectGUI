@@ -20,6 +20,18 @@ namespace EmbeddedDesignProjectGUI
             appBoard = new Appboard();
 
             InitializeComponent();
+            InitializeSerialPorts();
+            InitializeBaudrate();
+
+
+            connectBtn.Enabled = true;
+            disconnectBtn.Enabled = false;
+
+            databaseConnectBtn.Enabled = true;
+            databaseDisconnectBtn.Enabled = false;
+
+            passwordTxt.PasswordChar = '*';
+
         }
     }
 }
