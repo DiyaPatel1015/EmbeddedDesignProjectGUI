@@ -25,6 +25,7 @@ namespace EmbeddedDesignProjectGUI
             InitializeComponent();
             InitializeSerialPorts();
             InitializeBaudrate();
+            InitializeChart();
 
 
             connectBtn.Enabled = true;
@@ -193,6 +194,13 @@ namespace EmbeddedDesignProjectGUI
 
             // Apply the control output to the motor (or other actuators as required)
             appBoard.WriteMotor(result);
+
+            // Update the chart with the new temperature data
+            DateTime now = DateTime.Now;
+            tempChart.Series["TemperatureSeries"].Points.AddXY(now, temp);
+            tempChart.ChartAreas[0].AxisX.Minimum = now.AddSeconds(-60).ToOADate();
+            tempChart.ChartAreas[0].AxisX.Maximum = now.ToOADate();
+            tempChart.Invalidate();
         }
     }
 }
