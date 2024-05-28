@@ -156,8 +156,44 @@ namespace EmbeddedDesignProjectGUI
             appBoard.WriteLight(light);
         }
 
+        double integralError = 0;
         private void TempTimer_Tick(object sender, EventArgs e)
-        {
+        { 
+            // Reading the temperature sensor
+            int tempReceived = appBoard.ReadTemp();
+            double setTemp = (double)setpointNumericUpDown.Value;
+
+            // Convert the received temperature data to voltage and then to temperature in degrees Celsius
+            double voltage = (tempReceived / 255.0) * 5.0;
+            double temp = voltage / 0.05;
+
+            // Display the actual temperature in degrees Celsius
+            actualTempTxt.Text = temp.ToString("0.00") + " °C";
+
+            // Calculate the error between the actual temperature and the setpoint
+            double error = temp - setTemp;
+            integralError += (error * 0.1); // Accumulate the integral error with a fixed time step of 0.1s
+
+            // Retrieve the tuning parameters for the PI controller
+            double kp = Convert.ToDouble(piTuningKP);
+            double ki = Convert.ToDouble(piTuningKI);
+
+            // Calculate the control output using the PI control law
+            ushort result = (ushort)((kp * error) + (ki * integralError));
+
+            // Constrain the result to the range 0 to 100
+            if (result > 100)
+            {
+                result = 100;
+            }
+            if (result < 0)
+            {
+                result = 0;
+            }
+
+            // Apply the control output to the motor (or other actuators as required)
+            appBoard.WriteMotor(result);
         }
     }
 }
+

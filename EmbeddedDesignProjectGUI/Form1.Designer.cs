@@ -96,7 +96,7 @@ namespace EmbeddedDesignProjectGUI
             this.piTuningKP = new System.Windows.Forms.NumericUpDown();
             this.setpointNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tempChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.dataLoggingLabel = new System.Windows.Forms.Label();
@@ -130,7 +130,7 @@ namespace EmbeddedDesignProjectGUI
             ((System.ComponentModel.ISupportInitialize)(this.piTuningKP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.setpointNumericUpDown)).BeginInit();
             this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tempChart)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -892,7 +892,7 @@ namespace EmbeddedDesignProjectGUI
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.chart1);
+            this.tabPage4.Controls.Add(this.tempChart);
             this.tabPage4.Controls.Add(this.groupBox5);
             this.tabPage4.Controls.Add(this.motorSpeedTxt);
             this.tabPage4.Controls.Add(this.actualTempTxt);
@@ -915,23 +915,23 @@ namespace EmbeddedDesignProjectGUI
             this.tabPage4.Text = "Temp Control";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // chart1
+            // tempChart
             // 
             chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            this.tempChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(170, 31);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            this.tempChart.Legends.Add(legend1);
+            this.tempChart.Location = new System.Drawing.Point(170, 31);
+            this.tempChart.Name = "tempChart";
+            this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend1";
             series1.Name = "tempSeries";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(358, 394);
-            this.chart1.TabIndex = 15;
-            this.chart1.Text = "tempChart";
+            this.tempChart.Series.Add(series1);
+            this.tempChart.Size = new System.Drawing.Size(358, 394);
+            this.tempChart.TabIndex = 15;
+            this.tempChart.Text = "tempChart";
             // 
             // groupBox5
             // 
@@ -1224,7 +1224,7 @@ namespace EmbeddedDesignProjectGUI
             ((System.ComponentModel.ISupportInitialize)(this.setpointNumericUpDown)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tempChart)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
@@ -1325,7 +1325,7 @@ namespace EmbeddedDesignProjectGUI
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart tempChart;
         private System.Windows.Forms.VScrollBar lightsScrollBar;
     }
 }
