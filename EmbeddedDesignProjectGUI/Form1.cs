@@ -94,6 +94,33 @@ namespace EmbeddedDesignProjectGUI
 
         private void DigitalTimer_Tick(object sender, EventArgs e)
         {
+            // Digital I/O tick logic
+            byte PinA = appBoard.ReadPINA();
+            Color[] colors = new Color[] { Color.Red, Color.Black };
+            // Check if the first bit of PinA is set (1). If it is, set the color of correspond led to Red, 
+            // otherwise set it to Black based on the colors array.
+            PA0led.Color = (PinA & (1 << 0)) > 0 ? colors[0] : colors[1];
+            PA1led.Color = (PinA & (1 << 1)) > 0 ? colors[0] : colors[1];
+            PA2led.Color = (PinA & (1 << 2)) > 0 ? colors[0] : colors[1];
+            PA3led.Color = (PinA & (1 << 3)) > 0 ? colors[0] : colors[1];
+            PA4led.Color = (PinA & (1 << 4)) > 0 ? colors[0] : colors[1];
+            PA5led.Color = (PinA & (1 << 5)) > 0 ? colors[0] : colors[1];
+            PA6led.Color = (PinA & (1 << 6)) > 0 ? colors[0] : colors[1];
+            PA7led.Color = (PinA & (1 << 7)) > 0 ? colors[0] : colors[1];
+
+            //portC send to microcontroller
+            byte lightValue = 0; // Determine the light value to be sent to the microcontroller
+            // Iterate through all checkboxes (PC0 to PC7) and set corresponding bits in lightValue
+            for (int i = 0; i < 8; i++)
+            {
+                CheckBox checkbox = Controls.Find("PC" + i, true).FirstOrDefault() as CheckBox;
+                if (checkbox != null && checkbox.Checked)
+                {
+                    lightValue |= (byte)(1 << i); // Set the corresponding bit in lightValue
+                }
+            }
+            // Send the updated light value to the microcontroller
+            appBoard.WritePortC(lightValue);
         }
 
         private void PotsAndLightsTimer_Tick(object sender, EventArgs e)
