@@ -63,6 +63,10 @@ namespace EmbeddedDesignProjectGUI
 
             // Set up TabControl event handler
             tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
+
+            // Set properties of the vertical scrollbar
+            lightsScrollBar.Value = 100;  // Start with the scrollbar at the top (inverse 0)
+
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -136,6 +140,20 @@ namespace EmbeddedDesignProjectGUI
             double scaledValueB = potBValue / 255.0 * 5.0; // Scale the potB value to fit within the range of 0 to 5
             pot2Gauge.Value = (float)scaledValueB;
             pot2Gauge.DialText = scaledValueB.ToString();
+
+            // Read and display Light level
+            int lightsensor = appBoard.ReadLight();
+            lightGauge.Value = lightsensor;
+            lightGauge.DialText = lightsensor.ToString();
+
+            // Adjust lamp brightness based on scrollbar value
+            // Calculate the inverse value
+            int lightPercentage = lightsScrollBar.Maximum - lightsScrollBar.Value;
+            // Update the TextBox text with the inverse value
+            lightsTxt.Text = lightPercentage.ToString();
+
+            ushort light = (ushort)(lightPercentage * 4);
+            appBoard.WriteLight(light);
         }
 
         private void TempTimer_Tick(object sender, EventArgs e)
