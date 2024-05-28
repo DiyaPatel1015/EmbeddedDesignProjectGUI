@@ -12,8 +12,13 @@ namespace EmbeddedDesignProjectGUI
 {
     public partial class Form1 : Form
     {
+        static Appboard appBoard;
+
         public Form1()
         {
+            // Initialize the AppBoard object
+            appBoard = new Appboard();
+
             InitializeComponent();
         }
     }
