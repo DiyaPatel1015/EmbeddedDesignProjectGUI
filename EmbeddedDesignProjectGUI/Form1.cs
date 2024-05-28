@@ -32,6 +32,17 @@ namespace EmbeddedDesignProjectGUI
 
             passwordTxt.PasswordChar = '*';
 
+
+            // Subscribe all checkboxes to the CheckBox_CheckedChanged event handler
+            PC0.CheckedChanged += CheckBox_CheckedChanged;
+            PC1.CheckedChanged += CheckBox_CheckedChanged;
+            PC2.CheckedChanged += CheckBox_CheckedChanged;
+            PC3.CheckedChanged += CheckBox_CheckedChanged;
+            PC4.CheckedChanged += CheckBox_CheckedChanged;
+            PC5.CheckedChanged += CheckBox_CheckedChanged;
+            PC6.CheckedChanged += CheckBox_CheckedChanged;
+            PC7.CheckedChanged += CheckBox_CheckedChanged;
+
         }
     }
 }

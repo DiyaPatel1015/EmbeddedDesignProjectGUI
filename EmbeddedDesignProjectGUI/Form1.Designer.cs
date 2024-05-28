@@ -150,6 +150,7 @@ namespace EmbeddedDesignProjectGUI
             this.refresh_btn.TabIndex = 28;
             this.refresh_btn.Text = "Refresh";
             this.refresh_btn.UseVisualStyleBackColor = false;
+            this.refresh_btn.Click += new System.EventHandler(this.refresh_btn_Click);
             // 
             // serverName
             // 
