@@ -125,6 +125,17 @@ namespace EmbeddedDesignProjectGUI
 
         private void PotsAndLightsTimer_Tick(object sender, EventArgs e)
         {
+            //Pot1 voltage
+            double potAValue = appBoard.ReadPot1Value();
+            double scaledValueA = potAValue / 255.0 * 5.0; // Scale the potA value to fit within the range of 0 to 5
+            pot1Gauge.Value = (float)scaledValueA;
+            pot1Gauge.DialText = scaledValueA.ToString();
+
+            //Pot2 voltage
+            double potBValue = appBoard.ReadPot2Value();
+            double scaledValueB = potBValue / 255.0 * 5.0; // Scale the potB value to fit within the range of 0 to 5
+            pot2Gauge.Value = (float)scaledValueB;
+            pot2Gauge.DialText = scaledValueB.ToString();
         }
 
         private void TempTimer_Tick(object sender, EventArgs e)
