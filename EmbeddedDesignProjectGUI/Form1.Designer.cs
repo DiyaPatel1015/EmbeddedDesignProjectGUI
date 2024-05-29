@@ -719,9 +719,9 @@ namespace EmbeddedDesignProjectGUI
             // 
             // lightsScrollBar
             // 
-            this.lightsScrollBar.Location = new System.Drawing.Point(75, 30);
+            this.lightsScrollBar.Location = new System.Drawing.Point(75, 41);
             this.lightsScrollBar.Name = "lightsScrollBar";
-            this.lightsScrollBar.Size = new System.Drawing.Size(44, 307);
+            this.lightsScrollBar.Size = new System.Drawing.Size(39, 298);
             this.lightsScrollBar.TabIndex = 10;
             // 
             // lightsTxt
@@ -921,17 +921,16 @@ namespace EmbeddedDesignProjectGUI
             this.tempChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.tempChart.Legends.Add(legend1);
-            this.tempChart.Location = new System.Drawing.Point(170, 31);
+            this.tempChart.Location = new System.Drawing.Point(167, 31);
             this.tempChart.Name = "tempChart";
-            this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend1";
-            series1.Name = "tempSeries";
+            series1.Name = "Series1";
             this.tempChart.Series.Add(series1);
-            this.tempChart.Size = new System.Drawing.Size(358, 394);
+            this.tempChart.Size = new System.Drawing.Size(376, 394);
             this.tempChart.TabIndex = 15;
-            this.tempChart.Text = "tempChart";
+            this.tempChart.Text = "chart1";
             // 
             // groupBox5
             // 
@@ -983,6 +982,7 @@ namespace EmbeddedDesignProjectGUI
             this.stopDataLoggingBtn.TabIndex = 18;
             this.stopDataLoggingBtn.Text = "Stop Data Logging";
             this.stopDataLoggingBtn.UseVisualStyleBackColor = false;
+            this.stopDataLoggingBtn.Click += new System.EventHandler(this.stopDataLoggingBtn_Click);
             // 
             // dataLoggingBtn
             // 
@@ -995,6 +995,7 @@ namespace EmbeddedDesignProjectGUI
             this.dataLoggingBtn.TabIndex = 17;
             this.dataLoggingBtn.Text = "Enable Data Logging";
             this.dataLoggingBtn.UseVisualStyleBackColor = false;
+            this.dataLoggingBtn.Click += new System.EventHandler(this.dataLoggingBtn_Click);
             // 
             // groupBox6
             // 
@@ -1021,6 +1022,7 @@ namespace EmbeddedDesignProjectGUI
             this.insertDataBtn.TabIndex = 16;
             this.insertDataBtn.Text = "Insert Data to Table";
             this.insertDataBtn.UseVisualStyleBackColor = false;
+            this.insertDataBtn.Click += new System.EventHandler(this.insertDataBtn_Click);
             // 
             // manualDataTxt
             // 
@@ -1205,8 +1207,9 @@ namespace EmbeddedDesignProjectGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 701);
+            this.ClientSize = new System.Drawing.Size(581, 702);
             this.Controls.Add(this.tabControl1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabPage2.ResumeLayout(false);
@@ -1325,8 +1328,8 @@ namespace EmbeddedDesignProjectGUI
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataVisualization.Charting.Chart tempChart;
         private System.Windows.Forms.VScrollBar lightsScrollBar;
+        private System.Windows.Forms.DataVisualization.Charting.Chart tempChart;
     }
 }
 

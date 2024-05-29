@@ -73,63 +73,38 @@ namespace EmbeddedDesignProjectGUI
             }
         }
 
-        public int WriteSerial(byte instruction, ushort value = 0)
+        public int writeSerial(byte instruction, byte lsb = 0, byte msb = 0)
         {
             if (!serialPort.IsOpen)
             {
                 Console.Error.WriteLine("Error: Serial port is not open.");
                 return -1;
             }
-
-            byte lsb = (byte)(value & 0xFF); // Extract the least significant byte
-            byte msb = (byte)((value >> 8) & 0xFF); // Extract the most significant byte
             byte[] byteArray = { START, instruction, lsb, msb, STOP };
-
-            try
+            serialPort.Write(byteArray, 0, byteArray.Length);
+            while (serialPort.BytesToRead < 1) ;
+            int reply = serialPort.ReadByte();
+            if (instruction >= 0x0A) // set instruction
             {
-                serialPort.Write(byteArray, 0, byteArray.Length);
-                Stopwatch sw = Stopwatch.StartNew();
-
-                while (serialPort.BytesToRead < 1)
+                if (reply != instruction)
                 {
-                    if (sw.ElapsedMilliseconds > 500)
-                    {
-                        throw new TimeoutException("No reply received within timeout period.");
-                    }
+                    writeSerial(instruction, lsb, msb);
                 }
-
-                int reply = serialPort.ReadByte();
-
-                if (instruction >= 0x0A) // set instruction
-                {
-                    if (reply != instruction)
-                    {
-                        Console.Error.WriteLine("Mismatch in set instruction reply. Retrying...");
-                        return WriteSerial(instruction, value); // Retry
-                    }
-                    return -1;
-                }
-                else // read instruction
-                {
-                    return reply; // return the data
-                }
+                return 0;
             }
-            catch (TimeoutException ex)
+            else // read instruction
             {
-                Console.Error.WriteLine($"Timeout error: {ex.Message}");
-                return -1;
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine($"Error in WriteSerial: {ex.Message}");
-                return -1;
+                return reply; // return the data
             }
         }
+
+            
+
 
         // ******** Read from MCU ********//
         public byte ReadPINA()
         {
-            int PinA_byte = WriteSerial(READ_PINA);
+            int PinA_byte = writeSerial(READ_PINA);
             return (byte)PinA_byte;
         }
 
@@ -146,49 +121,59 @@ namespace EmbeddedDesignProjectGUI
         public int ReadPotV(int potNumber)
         {
             byte potNumberByte = (byte)potNumber; // Explicitly cast potNumber to byte
-            int potValue = WriteSerial(potNumberByte); // Pass the byte value to WriteSerial
+            int potValue = writeSerial(potNumberByte); // Pass the byte value to WriteSerial
             return potValue;
         }
 
         public byte ReadTemp()
         {
-            int tempSensor = WriteSerial(READ_TEMP);
+            int tempSensor = writeSerial(READ_TEMP);
             return (byte)tempSensor;
         }
 
         public byte ReadLight()
         {
-            int Light_byte = WriteSerial(READ_LIGHT);
+            int Light_byte = writeSerial(READ_LIGHT);
             return (byte)Light_byte;
         }
 
         //******** Write to MCU ********//
         public void WritePortC(byte data)
         {
-            WriteSerial(SET_PORTC, data);
+            writeSerial(SET_PORTC, data);
         }
 
-        public void WriteHeater(ushort heaterValue)
+        public void WriteHeater(int heaterValue)
         {
-            WriteSerial(SET_HEATER, heaterValue);
+            serialPort.DiscardInBuffer();
+            var heaterbytes = BitConverter.GetBytes(heaterValue); //converting the int into and array of bytes
+            byte[] c = { START, SET_LIGHT, heaterbytes[0], heaterbytes[1], STOP };
+            serialPort.Write(c, 0, c.Length);
         }
 
-        public void WriteLight(ushort lightValue)
+        public void WriteLight(int lightValue)
         {
-            WriteSerial(SET_LIGHT, lightValue);
+            serialPort.DiscardInBuffer();
+            var lightbytes = BitConverter.GetBytes(lightValue); //converting the int into and array of bytes
+            byte[] c = { START, SET_LIGHT, lightbytes[0], lightbytes[1], STOP };
+            serialPort.Write(c, 0, c.Length);
         }
 
-        public void WriteMotor(ushort motorValue)
+        public void WriteMotor(int motorValue)
         {
-            WriteSerial(SET_MOTOR, motorValue);
+            serialPort.DiscardInBuffer();
+            var motorbytes = BitConverter.GetBytes(motorValue); //converting the int into and array of bytes
+            byte[] c = { START, SET_LIGHT, motorbytes[0], motorbytes[1], STOP };
+            serialPort.Write(c, 0, c.Length);
         }
+
 
         //******** Reset MCU ********//
         public void ResetMCU()
         {
             if (serialPort.IsOpen)
             {
-                WriteSerial(RESET_COMMAND);
+                writeSerial(RESET_COMMAND);
             }
             else
             {

@@ -17,6 +17,8 @@ namespace EmbeddedDesignProjectGUI
         private Timer PotsAndLightsTimer;
         private Timer TempTimer;
 
+        double integralError = 0;
+        double tempSample = 0;
         public Form1()
         {
             // Initialize the AppBoard object
@@ -25,7 +27,6 @@ namespace EmbeddedDesignProjectGUI
             InitializeComponent();
             InitializeSerialPorts();
             InitializeBaudrate();
-            InitializeChart();
 
 
             connectBtn.Enabled = true;
@@ -153,11 +154,10 @@ namespace EmbeddedDesignProjectGUI
             // Update the TextBox text with the inverse value
             lightsTxt.Text = lightPercentage.ToString();
 
-            ushort light = (ushort)(lightPercentage * 4);
+            int light = (int)(lightPercentage * 4);
             appBoard.WriteLight(light);
         }
 
-        double integralError = 0;
         private void TempTimer_Tick(object sender, EventArgs e)
         { 
             // Reading the temperature sensor
@@ -170,17 +170,18 @@ namespace EmbeddedDesignProjectGUI
 
             // Display the actual temperature in degrees Celsius
             actualTempTxt.Text = temp.ToString("0.00") + " °C";
+            tempChart.Series[0].Points.AddXY(tempSample++, temp);
 
             // Calculate the error between the actual temperature and the setpoint
             double error = temp - setTemp;
             integralError += (error * 0.1); // Accumulate the integral error with a fixed time step of 0.1s
 
             // Retrieve the tuning parameters for the PI controller
-            double kp = Convert.ToDouble(piTuningKP);
-            double ki = Convert.ToDouble(piTuningKI);
+            double kp = (double)piTuningKP.Value;
+            double ki = (double)piTuningKI.Value;
 
             // Calculate the control output using the PI control law
-            ushort result = (ushort)((kp * error) + (ki * integralError));
+            int result = (int)((kp * error) + (ki * integralError));
 
             // Constrain the result to the range 0 to 100
             if (result > 100)
@@ -194,13 +195,6 @@ namespace EmbeddedDesignProjectGUI
 
             // Apply the control output to the motor (or other actuators as required)
             appBoard.WriteMotor(result);
-
-            // Update the chart with the new temperature data
-            DateTime now = DateTime.Now;
-            tempChart.Series["TemperatureSeries"].Points.AddXY(now, temp);
-            tempChart.ChartAreas[0].AxisX.Minimum = now.AddSeconds(-60).ToOADate();
-            tempChart.ChartAreas[0].AxisX.Maximum = now.ToOADate();
-            tempChart.Invalidate();
         }
     }
 }

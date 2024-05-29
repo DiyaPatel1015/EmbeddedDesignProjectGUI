@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,30 +11,51 @@ namespace EmbeddedDesignProjectGUI
 {
     public partial class Form1 : Form
     {
-        private void InitializeChart()
+        int Check = 0;
+        void Datalogging(double Temperature)
         {
-            // Clear any existing series
-            tempChart.Series.Clear();
+            string column1 = "timeStamp"; //column 1 title
+            string column2 = "temperature"; //column 2 title
+            string column3 = "remark"; //column 3 title
+            string Chart = "temperature"; //chart
+            string now = DateTime.Now.ToString();
+            string TempSend = Temperature.ToString("00.000");
+            string note = "ST123456";
 
-            // Create a new series and add it to the chart
-            var series = new Series("TemperatureSeries")
+            string Query = "INSERT INTO " + Chart + " (`" + column1 + "`,`" + column2 + "`,`" + column3 + "`) VALUES ('" + now + "','" + TempSend + "','" + note + "')";
+
+            try
             {
-                ChartType = SeriesChartType.Line,
-                BorderWidth = 2,
-                IsVisibleInLegend = false,
-            };
-            tempChart.Series.Add(series);
-            // Configure chart axes
-            tempChart.ChartAreas[0].AxisY.Maximum = 100;
-            tempChart.ChartAreas[0].AxisY.Minimum = 0;
+                MySqlCommand add = new MySqlCommand(Query, myConnection); //Saving insert string and location into output
+                add.ExecuteNonQuery(); //executing output
 
-            tempChart.ChartAreas[0].AxisX.Title = "Time";
-            tempChart.ChartAreas[0].AxisY.Title = "Temperature (°C)";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error"); //showing if incorrect
+            }
 
-            // Set chart area to adjust automatically
-            tempChart.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
-            tempChart.ChartAreas[0].AxisX.LabelStyle.Format = "HH:mm:ss";
         }
 
+        private void insertDataBtn_Click(object sender, EventArgs e)
+        {
+            double temp = (Convert.ToDouble(manualDataTxt.Text));
+            Datalogging(temp);
+        }
+
+        private void dataLoggingBtn_Click(object sender, EventArgs e)
+        {
+            dataLoggingBtn.Enabled = false;
+            Check = 1;
+            dataLoggingBtn.Enabled = true;
+        }
+
+        private void stopDataLoggingBtn_Click(object sender, EventArgs e)
+        {
+            stopDataLoggingBtn.Enabled = false;
+            Check = 0;
+            stopDataLoggingBtn.Enabled = true;
+        }
     }
 }
+
